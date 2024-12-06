@@ -14,43 +14,45 @@ const analyzeContract = async (contract, apiKey) => {
     here is the smart contract: ${contract}
     plase provide the results in the following array format for easy front-end display
     [
-        {
-          'section': 'Audit Report',
-          'details': 'A detail audit report of the smart contract, covering segurity,performance and any other relevant aspect'
-        },
-        {
-            'section': 'Metric Scores',
-'details': [
-  {
-    'metric': 'Security',
-    'score': '0-10',
-  },
-  {
-    'metric': 'Performance',
-    'score': '0-10',
-  }, {
-    'metric': 'other key areas',
-    'score': '0-10',
-  },
-] {
-    'metric': 'Gas Eficciency',
-    'score': '0-10',
-  }, {
-    'metric': 'Code quality',
-    'score': '0-10',
-    {
-        'metric': 'Documentation',
-        'score': '0-10',
+      {
+        section: 'Audit Report',
+        details: 'A detailed audit report of the smart contract, covering security, performance, and any other relevant aspect.',
       },
-  },
-        }
-        [
-            {
-              'section': 'Audit Report',
-              'details': 'Sugestim for improving the smart contracts in terms of segurity,perfomance and any other identify weaknesses'
-            }
-          ]
-      ] Thank you`,
+      {
+        section: 'Metric Scores',
+        details: [
+          {
+            metric: 'Security',
+            score: '0-10',
+          },
+          {
+            metric: 'Performance',
+            score: '0-10',
+          },
+          {
+            metric: 'Other Key Areas',
+            score: '0-10',
+          },
+          {
+            metric: 'Gas Efficiency',
+            score: '0-10',
+          },
+          {
+            metric: 'Code Quality',
+            score: '0-10',
+          },
+          {
+            metric: 'Documentation',
+            score: '0-10',
+          },
+        ],
+      },
+      {
+        section: 'Suggestions for improvement',
+        details: 'Suggestions for improving the smart contracts in terms of security, performance, and any other identified weaknesses.',
+      },
+    ];
+     Thank you`,
       },
     ],
   };
@@ -59,4 +61,21 @@ const analyzeContract = async (contract, apiKey) => {
   const auditResults = JSON.parse(chatCompletion.choices[0].message.content);
 
   console.log("Audit Reports");
+  console.log(auditResults.find((r) => r.section === "Audit Report").details);
+  console.log("\nMetric Scores");
+
+  auditResults
+    .find((r) => r.section === "Metric Scores")
+    .details.forEach((metric) => {
+      {
+        console.log(`${metric.score}/10`);
+      }
+    });
+
+  console.log("\nSuggestions for improvements");
+  console.log(
+    auditResults.find((r) => r.section === "Suggestions for improvement")
+      .details
+  );
 };
+module.exports = analyzeContract;
